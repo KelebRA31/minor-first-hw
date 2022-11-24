@@ -1,10 +1,10 @@
 # minor-first-hw
 
 
-1
+##1
 https://sql-ex.ru/learn_exercises.php?LN=1
-Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол. Вывести: model, speed и hd
-SELECT model, speed, hd FROM PC WHERE price < 500
+
+```SELECT model, speed, hd FROM PC WHERE price < 500```
 
 2
 https://sql-ex.ru/learn_exercises.php?LN=2
