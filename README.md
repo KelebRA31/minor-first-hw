@@ -120,11 +120,115 @@ Select distinct type,laptop.model,speed from laptop inner join product on laptop
 where speed < (select MIN(speed) from pc) 
 ```
 
-18
+## 18
 https://sql-ex.ru/learn_exercises.php?LN=18
 
-19
+```
+SELECT DISTINCT maker,price  FROM printer inner JOIN product ON printer.model= product.model  
+WHERE price = (select min(price)from printer where color = 'y' ) and color = 'y' 
+```
+
+## 19
 https://sql-ex.ru/learn_exercises.php?LN=19
 
-20
+```
+Select maker, avg(screen)as Avg_screen 
+from laptop inner join product on laptop.model =  product.model group by maker 
+```
+
+## 20
 https://sql-ex.ru/learn_exercises.php?LN=20
+
+```
+Select maker , count(model) as Count_Model from product where type = 'pc' group by maker 
+having count(model) >= 3
+```
+
+## 21
+https://sql-ex.ru/learn_exercises.php?LN=21
+
+```
+Select maker , max(price)as Max_price from pc inner join product on pc.model= product.model  
+group by maker
+```
+    
+## 22
+https://sql-ex.ru/learn_exercises.php?LN=22
+
+```
+Select speed , avg(price) as Avg_price from pc  where speed > 600 group by speed
+```
+    
+## 23
+https://sql-ex.ru/learn_exercises.php?LN=23
+Найдите производителей, которые производили бы как ПКсо скоростью не менее 750 МГц, так и ПК-блокноты со скоростью не менее 750 МГц.Вывести: Maker
+select distinct maker  from pc inner join product on pc.model = product.model  
+where pc.speed >= 750 and maker in (select  maker  
+from laptop inner join product on laptop.model = product.model where laptop.speed >= 750) 
+
+    
+## 24
+https://sql-ex.ru/learn_exercises.php?LN=24
+
+```
+SELECT model FROM( 
+SELECT distinct model, price FROM laptop WHERE laptop.price = (SELECT MAX(price) FROM laptop)  
+UNION 
+SELECT distinct model, price FROM pc WHERE pc.price = (SELECT MAX(price) FROM pc)  
+UNION 
+SELECT distinct model, price FROM printer WHERE printer.price = (SELECT MAX(price) FROM printer)  
+) as t 
+WHERE t.price=(SELECT MAX(price) FROM ( 
+SELECT distinct price FROM laptop WHERE laptop.price = (SELECT MAX(price) FROM laptop)  
+UNION 
+SELECT distinct price FROM pc WHERE pc.price = (SELECT MAX(price) FROM pc)  
+UNION 
+SELECT distinct price FROM printer WHERE printer.price = (SELECT MAX(price) FROM printer)  
+) as t1 )
+```
+
+
+## 25
+https://sql-ex.ru/learn_exercises.php?LN=25
+
+```
+SELECT distinct product.maker FROM product WHERE product.type='Printer'  
+INTERSECT 
+SELECT distinct product.maker FROM product INNER JOIN pc ON pc.model=product.model  
+WHERE product.type='PC' AND pc.ram=(SELECT MIN(ram) FROM pc)  
+AND pc.speed = (SELECT MAX(speed) FROM (SELECT distinct speed FROM pc 
+WHERE pc.ram=(SELECT MIN(ram) FROM pc)) as t)
+```
+
+## 26
+https://sql-ex.ru/learn_exercises.php?LN=26
+
+```
+SELECT t1.c/t1.d FROM( SELECT SUM(t.a) as c, SUM(t.b) as d FROM(  
+SELECT SUM(pc.price) as a, COUNT(pc.code) as b FROM pc 
+INNER JOIN product ON pc.model=product.model WHERE product.maker='A'  
+UNION 
+SELECT SUM(laptop.price) as a, COUNT(laptop.code) as b FROM laptop 
+INNER JOIN product ON laptop.model=product.model WHERE product.maker='A') as t) as t1
+```
+    
+## 27
+https://sql-ex.ru/learn_exercises.php?LN=27
+
+```
+select maker,avg(hd)  from product inner join pc on product.model=pc.model   
+where maker in(select maker  from product  where type='printer')  group by maker 
+```
+    
+## 28
+https://sql-ex.ru/learn_exercises.php?LN=28
+
+    
+## 29
+https://sql-ex.ru/learn_exercises.php?LN=29
+
+```
+select t.point, t.date, SUM(t.inc), sum(t.out) from( select point, date, inc, null as out from Income_o  
+Union 
+select point, date, null as inc, Outcome_o.out from Outcome_o) as t group by t.point, t.date 
+```
