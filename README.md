@@ -233,6 +233,8 @@ select point, date, null as inc, Outcome_o.out from Outcome_o) as t group by t.p
 ```
 
 ## 30
+https://sql-ex.ru/learn_exercises.php?LN=30
+
 ```
 select point, date, SUM(sum_out), SUM(sum_inc) 
 from( select point, date, SUM(inc) as sum_inc, null as sum_out from Income Group by point, date  
@@ -242,11 +244,15 @@ group by point, date order by point
 ```
 
 ## 31
+https://sql-ex.ru/learn_exercises.php?LN=31
+
 ```
 Select class , country from classes where bore >= 16 
 ```
 
 ## 32
+https://sql-ex.ru/learn_exercises.php?LN=32
+
 ```
 Select country, cast(avg((power(bore,3)/2)) as numeric(6,2)) as weight 
 from (select country, classes.class, bore, name from classes left join ships on classes.class=ships.class  
@@ -256,26 +262,36 @@ where ship=class and ship not in (select name from ships) ) a
 where name!='null' group by country
 ```
 ## 33
+https://sql-ex.ru/learn_exercises.php?LN=33
+
 ```
 Select ship from outcomes,battles where result= 'sunk' and battle = 'North Atlantic' group by ship  
 ```
 ## 34
+https://sql-ex.ru/learn_exercises.php?LN=34
+
 ```
 Select name from classes,ships where launched >=1922 and displacement>35000 and type='bb' and
 ships.class = classes.class
 ```
 ## 35
+https://sql-ex.ru/learn_exercises.php?LN=35
+
 ```
 SELECT model, type FROM product 
 WHERE model NOT LIKE '%[^0-9]%' OR model NOT LIKE '%[^a-z]%'
 ```
 ## 36
+https://sql-ex.ru/learn_exercises.php?LN=36
+
 ```
 Select name  from ships  where class = name   
 union  
 select ship as name  from classes,outcomes  where classes.class = outcomes.ship  
 ```
 ## 37
+https://sql-ex.ru/learn_exercises.php?LN=37
+
 ```
 Select 
 	c.class 
@@ -291,12 +307,16 @@ Group by c.class
 Having count(s.name)=1
 ```
 ## 38
+https://sql-ex.ru/learn_exercises.php?LN=38
+
 ```
 Select distinct country  from classes  where type='bb'   
 intersect  
 Select distinct country  from classes  where type='bc'  
 ```
 ## 39
+https://sql-ex.ru/learn_exercises.php?LN=39
+
 ```
 select distinct ccc.sh from ( select aaa.ship as sh, aaa.[date] as d1, bbb.[date] as d2 from ( 
 select ship, [date] from outcomes as o inner join battles as b on o.battle=b.name where result = 'damaged') as aaa inner join (select ship,  
@@ -304,6 +324,8 @@ select ship, [date] from outcomes as o inner join battles as b on o.battle=b.nam
 where bbb.date > aaa.date) as ccc
 ```
 ## 40
+https://sql-ex.ru/learn_exercises.php?LN=40
+
 ```
 select maker, type from product
 where maker in (SELECT maker FROM
@@ -311,6 +333,8 @@ where maker in (SELECT maker FROM
 group by maker having count(maker) = 1) group by maker, type having count(type)>1
 ```
 ## 41
+https://sql-ex.ru/learn_exercises.php?LN=41
+
 ```
 with D as
 (select model, price from PC
@@ -326,6 +350,8 @@ right join D on P.model=D.model
 group by P.maker
 ```
 ## 42
+https://sql-ex.ru/learn_exercises.php?LN=42
+
 ```
 Select 
 	ship, battle
@@ -334,11 +360,15 @@ Where result = 'sunk'
 ```
 
 ## 43
+https://sql-ex.ru/learn_exercises.php?LN=43
+
 ```
 select name from battles where DATEPART(yy, date) not in (select DATEPART(yy, date)  
 from battles join ships on DATEPART(yy, date)=launched) 
 ```
 ## 44
+https://sql-ex.ru/learn_exercises.php?LN=44
+
 ```
 Select name from ships where name like 'R%'   
 union   
@@ -347,12 +377,15 @@ union
 Select ship from outcomes where ship like 'R%'
 ```
 ## 45
+https://sql-ex.ru/learn_exercises.php?LN=45
+
 ```
 Select name from ships where name like '% % %'  
 union   
 Select ship from outcomes where ship like '% % %'  
 ```
 ## 46
+https://sql-ex.ru/learn_exercises.php?LN=46
 ```
 select name as n, displacement as d, numguns as ng from ships inner join classes on ships.class=classes.class where name in (select ship from outcomes where battle = 'Guadalcanal')   
 union 
