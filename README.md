@@ -187,7 +187,6 @@ SELECT distinct price FROM printer WHERE printer.price = (SELECT MAX(price) FROM
 ) as t1 )
 ```
 
-
 ## 25
 https://sql-ex.ru/learn_exercises.php?LN=25
 
@@ -232,3 +231,133 @@ select t.point, t.date, SUM(t.inc), sum(t.out) from( select point, date, inc, nu
 Union 
 select point, date, null as inc, Outcome_o.out from Outcome_o) as t group by t.point, t.date 
 ```
+
+## 30
+```
+select point, date, SUM(sum_out), SUM(sum_inc) 
+from( select point, date, SUM(inc) as sum_inc, null as sum_out from Income Group by point, date  
+Union 
+select point, date, null as sum_inc, SUM(out) as sum_out from Outcome Group by point, date ) as t  
+group by point, date order by point
+```
+
+## 31
+```
+Select class , country from classes where bore >= 16 
+```
+
+## 32
+```
+Select country, cast(avg((power(bore,3)/2)) as numeric(6,2)) as weight 
+from (select country, classes.class, bore, name from classes left join ships on classes.class=ships.class  
+union all 
+select distinct country, class, bore, ship from classes t1 left join outcomes t2 on t1.class=t2.ship  
+where ship=class and ship not in (select name from ships) ) a  
+where name!='null' group by country
+```
+## 33
+```
+Select ship from outcomes,battles where result= 'sunk' and battle = 'North Atlantic' group by ship  
+```
+## 34
+```
+Select name from classes,ships where launched >=1922 and displacement>35000 and type='bb' and
+ships.class = classes.class
+```
+## 35
+```
+SELECT model, type FROM product 
+WHERE model NOT LIKE '%[^0-9]%' OR model NOT LIKE '%[^a-z]%'
+```
+## 36
+```
+Select name  from ships  where class = name   
+union  
+select ship as name  from classes,outcomes  where classes.class = outcomes.ship  
+```
+## 37
+```
+Select 
+	c.class 
+From Classes c
+Left Join (Select class, name 
+	From Ships
+	Union
+Select 
+	Classes.class as class, Outcomes.ship as name
+From Outcomes
+Join Classes ON Outcomes.ship = Classes.class) as s On c.class = s.class
+Group by c.class
+Having count(s.name)=1
+```
+## 38
+```
+Select distinct country  from classes  where type='bb'   
+intersect  
+Select distinct country  from classes  where type='bc'  
+```
+## 39
+```
+select distinct ccc.sh from ( select aaa.ship as sh, aaa.[date] as d1, bbb.[date] as d2 from ( 
+select ship, [date] from outcomes as o inner join battles as b on o.battle=b.name where result = 'damaged') as aaa inner join (select ship,  
+[date] from outcomes as o inner join battles as b on o.battle=b.name) as bbb on aaa.ship=bbb.ship 
+where bbb.date > aaa.date) as ccc
+```
+## 40
+```
+select maker, type from product
+where maker in (SELECT maker FROM
+(SELECT maker, type FROM Product GROUP BY maker, type) Alias
+group by maker having count(maker) = 1) group by maker, type having count(type)>1
+```
+## 41
+```
+with D as
+(select model, price from PC
+union
+select model, price from Laptop
+union
+select model, price from Printer)
+Select distinct P.maker,
+CASE WHEN MAX(CASE WHEN D.price IS NULL THEN 1 ELSE 0 END) = 0 THEN
+MAX(D.price) END
+from Product P
+right join D on P.model=D.model
+group by P.maker
+```
+## 42
+```
+Select 
+	ship, battle
+From Outcomes
+Where result = 'sunk'
+```
+
+## 43
+```
+select name from battles where DATEPART(yy, date) not in (select DATEPART(yy, date)  
+from battles join ships on DATEPART(yy, date)=launched) 
+```
+## 44
+```
+Select name from ships where name like 'R%'   
+union   
+Select name from battles where name like 'R%'   
+union   
+Select ship from outcomes where ship like 'R%'
+```
+## 45
+```
+Select name from ships where name like '% % %'  
+union   
+Select ship from outcomes where ship like '% % %'  
+```
+## 46
+```
+select name as n, displacement as d, numguns as ng from ships inner join classes on ships.class=classes.class where name in (select ship from outcomes where battle = 'Guadalcanal')   
+union 
+select ship as n, displacement as d, numguns as ng from outcomes inner join classes on outcomes.ship=classes.class where battle = 'Guadalcanal' and ship not in (select name from ships)   
+union  
+select ship as n, null as d, null as ng from outcomes where battle = 'Guadalcanal' and ship not in (select name from ships) and ship not in  (select class from classes)   
+```
+
