@@ -394,6 +394,13 @@ union
 select ship as n, null as d, null as ng from outcomes where battle = 'Guadalcanal' and ship not in (select name from ships) and ship not in  (select class from classes)   
 ```
 
+## 47
+https://sql-ex.ru/learn_exercises.php?LN=47
+
+```
+
+```
+
 ## 48
 https://sql-ex.ru/learn_exercises.php?LN=48
 
