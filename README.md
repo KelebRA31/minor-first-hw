@@ -394,3 +394,214 @@ union
 select ship as n, null as d, null as ng from outcomes where battle = 'Guadalcanal' and ship not in (select name from ships) and ship not in  (select class from classes)   
 ```
 
+## 48
+https://sql-ex.ru/learn_exercises.php?LN=48
+Select class as n from ships where name in(select ship from outcomes where result='sunk')   
+union  
+Select ship as n from outcomes  
+where ship not in(Select name from ships) and ship in(Select class from classes) and result='sunk'   
+
+## 49
+https://sql-ex.ru/learn_exercises.php?LN=49
+
+
+## 50
+https://sql-ex.ru/learn_exercises.php?LN=50
+
+
+## 51
+https://sql-ex.ru/learn_exercises.php?LN=51
+
+
+## 52
+https://sql-ex.ru/learn_exercises.php?LN=52
+
+
+## 53
+https://sql-ex.ru/learn_exercises.php?LN=53
+
+
+## 54
+https://sql-ex.ru/learn_exercises.php?LN=54
+
+
+## 55
+https://sql-ex.ru/learn_exercises.php?LN=55
+
+
+## 56
+https://sql-ex.ru/learn_exercises.php?LN=56
+
+
+## 57
+https://sql-ex.ru/learn_exercises.php?LN=57
+
+
+## 58
+https://sql-ex.ru/learn_exercises.php?LN=58
+
+
+## 59
+https://sql-ex.ru/learn_exercises.php?LN=59
+
+
+## 60
+https://sql-ex.ru/learn_exercises.php?LN=60
+
+
+## 61
+https://sql-ex.ru/learn_exercises.php?LN=61
+
+
+## 62
+https://sql-ex.ru/learn_exercises.php?LN=62
+
+## 63
+https://sql-ex.ru/learn_exercises.php?LN=63
+
+
+## 64
+https://sql-ex.ru/learn_exercises.php?LN=64
+
+
+## 65
+https://sql-ex.ru/learn_exercises.php?LN=65
+
+## 66
+https://sql-ex.ru/learn_exercises.php?LN=66
+
+
+## 67
+https://sql-ex.ru/learn_exercises.php?LN=67
+
+
+## 68
+https://sql-ex.ru/learn_exercises.php?LN=68
+
+## 69
+https://sql-ex.ru/learn_exercises.php?LN=69
+
+
+## 70
+https://sql-ex.ru/learn_exercises.php?LN=70
+
+
+## 71
+https://sql-ex.ru/learn_exercises.php?LN=71
+
+## 72
+https://sql-ex.ru/learn_exercises.php?LN=72
+
+## 73
+https://sql-ex.ru/learn_exercises.php?LN=73
+
+
+## 74
+https://sql-ex.ru/learn_exercises.php?LN=74
+
+
+## 75
+https://sql-ex.ru/learn_exercises.php?LN=75
+
+
+## 76
+https://sql-ex.ru/learn_exercises.php?LN=76
+
+
+## 77
+https://sql-ex.ru/learn_exercises.php?LN=77
+
+
+## 78
+https://sql-ex.ru/learn_exercises.php?LN=78
+
+
+## 79
+https://sql-ex.ru/learn_exercises.php?LN=79
+
+
+## 80
+https://sql-ex.ru/learn_exercises.php?LN=80
+
+
+## 81
+https://sql-ex.ru/learn_exercises.php?LN=81
+
+
+## 82
+https://sql-ex.ru/learn_exercises.php?LN=82
+
+
+## 83
+https://sql-ex.ru/learn_exercises.php?LN=83
+
+
+## 84
+https://sql-ex.ru/learn_exercises.php?LN=84
+
+## 85
+https://sql-ex.ru/learn_exercises.php?LN=85
+
+
+## 86
+https://sql-ex.ru/learn_exercises.php?LN=86
+
+
+## 87
+https://sql-ex.ru/learn_exercises.php?LN=87
+
+
+## 88
+https://sql-ex.ru/learn_exercises.php?LN=88
+
+
+## 89
+https://sql-ex.ru/learn_exercises.php?LN=89
+
+
+## 90
+https://sql-ex.ru/learn_exercises.php?LN=90
+
+
+## 91
+https://sql-ex.ru/learn_exercises.php?LN=91
+
+
+## 92
+https://sql-ex.ru/learn_exercises.php?LN=92
+
+
+## 93
+https://sql-ex.ru/learn_exercises.php?LN=93
+
+
+## 94
+https://sql-ex.ru/learn_exercises.php?LN=94
+
+
+
+## 95
+https://sql-ex.ru/learn_exercises.php?LN=95
+
+
+
+## 96
+https://sql-ex.ru/learn_exercises.php?LN=96
+
+
+
+## 97
+https://sql-ex.ru/learn_exercises.php?LN=97
+
+
+## 98
+https://sql-ex.ru/learn_exercises.php?LN=98
+
+
+## 99
+https://sql-ex.ru/learn_exercises.php?LN=99
+
+
+## 100
+https://sql-ex.ru/learn_exercises.php?LN=100
+
