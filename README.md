@@ -396,117 +396,220 @@ select ship as n, null as d, null as ng from outcomes where battle = 'Guadalcana
 
 ## 48
 https://sql-ex.ru/learn_exercises.php?LN=48
-Select class as n from ships where name in(select ship from outcomes where result='sunk')   
+
+```Select class as n from ships where name in(select ship from outcomes where result='sunk')   
 union  
 Select ship as n from outcomes  
-where ship not in(Select name from ships) and ship in(Select class from classes) and result='sunk'   
+where ship not in(Select name from ships) and ship in(Select class from classes) and result='sunk'  
+```
 
 ## 49
 https://sql-ex.ru/learn_exercises.php?LN=49
 
+```
+select name from ships where class in( Select class from classes where bore=16)   
+union  
+select ship from outcomes where ship in( Select class from classes where bore=16)  
+```
 
 ## 50
 https://sql-ex.ru/learn_exercises.php?LN=50
-
+```
+SELECT distinct battle FROM Classes  inner JOIN Ships  ON ships.class = classes.class   
+inner JOIN Outcomes  ON Classes.class=Outcomes.ship or Ships.name=Outcomes.ship   
+WHERE classes.class = 'Kongo'  
+```
 
 ## 51
 https://sql-ex.ru/learn_exercises.php?LN=51
-
+```
+select NAME from(select name as NAME, displacement, numguns  
+from ships inner join classes on ships.class = classes.class 
+union 
+select ship as NAME, displacement, numguns from outcomes inner join classes on outcomes.ship= classes.class) as d1 inner join (select displacement, max(numGuns) as numguns from ( select displacement, numguns from ships inner join classes on ships.class = classes.class  
+union 
+select displacement, numguns  from outcomes inner join classes on outcomes.ship= classes.class) as f 
+group by displacement) as d2 on d1.displacement=d2.displacement and d1.numguns =d2.numguns 
+```
 
 ## 52
 https://sql-ex.ru/learn_exercises.php?LN=52
+```
+Select distinct name from ships  inner join classes cl on ships.class=cl.class 
+where (numGuns>=9 or numguns is NULL) and (bore<19 or bore is NULL) and (displacement<=65000 or displacement is NULL) and type='bb' and country='japan' 
+```
 
 
 ## 53
 https://sql-ex.ru/learn_exercises.php?LN=53
-
+```
+select cast(avg(numguns*1.0) as numeric(4,2)) as Avg_numGuns  from classes where type='bb' 
+```
 
 ## 54
 https://sql-ex.ru/learn_exercises.php?LN=54
-
+```
+SELECT CAST(AVG(numguns*1.0) AS NUMERIC (4,2)) as AVG_nmg 
+FROM (SELECT ship, type, numguns   FROM Outcomes LEFT JOIN Classes ON ship = class  
+UNION  
+SELECT name, type, numguns FROM Ships as S INNER JOIN  Classes as C ON c.class = s.class ) AS T 
+WHERE type = 'bb' 
+```
 
 ## 55
 https://sql-ex.ru/learn_exercises.php?LN=55
-
+```
+select C.class, min(launched)  from ships as S right join classes as C on s.class=c.class group by C.class 
+```
 
 ## 56
 https://sql-ex.ru/learn_exercises.php?LN=56
+```
 
+```
 
 ## 57
 https://sql-ex.ru/learn_exercises.php?LN=57
-
+```
+select class as cls, count(class) as sunked from( 
+select C.class, O.ship from classes as C join outcomes as O on C.class=O.ship where O.result='sunk' 
+union 
+select S.class, O.ship from outcomes as O join ships as S on S.name=O.ship where O.result='sunk') as T 
+where class in ( select distinct X.class from  (select C.class, O.ship from classes as C join outcomes as O on C.class=O.ship 
+union 
+select C.class, S.name from classes as C join ships as S on C.class=S.class) as X group by X.class 
+having count(X.class)>=3 )  group by class 
+```
 
 ## 58
 https://sql-ex.ru/learn_exercises.php?LN=58
-
+```
+select main_maker ,main_type ,CONVERT(NUMERIC(6,2),((sub_num*100.00)/(total_num*100.00)*100.00))  
+from (select count(p5.model) total_num ,p5.maker main_maker 
+ from product p5 group by p5.maker) p6 JOIN (select p3.maker sub_maker ,p3.type main_type ,count(p4.model) sub_num 
+ from (select p1.maker maker, p2.type type from product p1 cross join product p2 group by p1.maker, p2.type) p3 left join product p4 on p3.maker = p4.maker and p3.type = p4.type group by  p3.maker,p3.type) p7 ON p7.sub_maker = p6.main_maker 
+```
 
 ## 59
 https://sql-ex.ru/learn_exercises.php?LN=59
-
+```
+select a.point, case when o is null then i else i-o end remain FROM  (select point, sum(inc) as i 
+from Income_o group by point) as A left join (select point, sum(out) as o from Outcome_o group by point) as B on A.point=B.point 
+```
 
 ## 60
 https://sql-ex.ru/learn_exercises.php?LN=60
-
+```
+select a.point,  case when o is null  then i else i-o end remain FROM (select point, sum(inc) as i 
+from Income_o where '20010415' > date group by point) as A left join (select point, sum(out) as o 
+from Outcome_o  where '20010415' > date group by point) as B on A.point=B.point  
+```
 
 ## 61
 https://sql-ex.ru/learn_exercises.php?LN=61
-
+```
+select (select sum(inc) from income_o) - (select sum(out) from outcome_o) as remain  
+```
 
 ## 62
 https://sql-ex.ru/learn_exercises.php?LN=62
+```
+select  (select sum(inc) from income_o where '20010415' > date)   
+-  
+(select sum(out) from outcome_o where '20010415' > date)  as remain 
+```
 
 ## 63
 https://sql-ex.ru/learn_exercises.php?LN=63
-
+```
+select name from Passenger where ID_psg in(Select Left([ol],CHARINDEX ( ' ', ol)) from ( 
+Select CAST(concat(ID_psg,' ', place) AS VARCHAR(30)) as ol, trip_no as o, ID_psg as psg 
+from Pass_in_trip ) as lll group by ol having count(o)>1) 
+```
 
 ## 64
 https://sql-ex.ru/learn_exercises.php?LN=64
-
+```
+Select income.point, income.date, 'inc' as operation, sum(income.inc) 
+from income left join outcome on income.point=outcome.point and income.date=outcome.date 
+where outcome.date is null  group by income.point, income.date 
+union 
+Select outcome.point, outcome.date, 'out' as operation, sum(outcome.out) 
+from income right join outcome on income.point=outcome.point and income.date=outcome.date 
+where income.date is null group by outcome.point, outcome.date 
+```
 
 ## 65
 https://sql-ex.ru/learn_exercises.php?LN=65
+```
+
+```
 
 ## 66
 https://sql-ex.ru/learn_exercises.php?LN=66
+```
 
+```
 
 ## 67
 https://sql-ex.ru/learn_exercises.php?LN=67
+```
 
+```
 
 ## 68
 https://sql-ex.ru/learn_exercises.php?LN=68
+```
+
+```
 
 ## 69
 https://sql-ex.ru/learn_exercises.php?LN=69
+```
 
+```
 
 ## 70
 https://sql-ex.ru/learn_exercises.php?LN=70
+```
 
+```
 
 ## 71
 https://sql-ex.ru/learn_exercises.php?LN=71
+```
+
+```
 
 ## 72
 https://sql-ex.ru/learn_exercises.php?LN=72
+```
+
+```
 
 ## 73
 https://sql-ex.ru/learn_exercises.php?LN=73
+```
 
+```
 
 ## 74
 https://sql-ex.ru/learn_exercises.php?LN=74
+```
 
+```
 
 ## 75
 https://sql-ex.ru/learn_exercises.php?LN=75
+```
 
+```
 
 ## 76
 https://sql-ex.ru/learn_exercises.php?LN=76
+```
 
+```
 
 ## 77
 https://sql-ex.ru/learn_exercises.php?LN=77
