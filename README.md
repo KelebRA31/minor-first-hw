@@ -561,7 +561,9 @@ https://sql-ex.ru/learn_exercises.php?LN=66
 ## 67
 https://sql-ex.ru/learn_exercises.php?LN=67
 ```
-
+select count(qqq) as qty from ( select town_from as qqq, town_to, count(plane) as cp from Trip 
+group by town_from, town_to having count(plane) >= all(select count(plane)  from Trip 
+group by town_from, town_to) ) as tab 
 ```
 
 ## 68
@@ -585,7 +587,7 @@ https://sql-ex.ru/learn_exercises.php?LN=70
 ## 71
 https://sql-ex.ru/learn_exercises.php?LN=71
 ```
-
+select p.maker from product p where p.type='pc' group by p.maker having count(DISTINCT p.model) = ( select count(DISTINCT pc.model) from pc where pc.model in ( select DISTINCT pr.model from product pr where pr.maker=p.maker )) 
 ```
 
 ## 72
@@ -603,7 +605,8 @@ https://sql-ex.ru/learn_exercises.php?LN=73
 ## 74
 https://sql-ex.ru/learn_exercises.php?LN=74
 ```
-
+select c.country, c.class from classes c where c.country like (case when  (select count(*) from classes c 
+where c.country='Russia' group by c.country) is not null THEN ('Russia') else ('%') end) 
 ```
 
 ## 75
@@ -632,10 +635,17 @@ https://sql-ex.ru/learn_exercises.php?LN=79
 
 ## 80
 https://sql-ex.ru/learn_exercises.php?LN=80
+```
+select distinct maker from product  where maker not in ( select maker from product  where model in ( 
+select model from product where type='pc' except select model from pc ) ) 
+```
 
 
 ## 81
 https://sql-ex.ru/learn_exercises.php?LN=81
+```
+
+```
 
 
 ## 82
@@ -651,6 +661,14 @@ https://sql-ex.ru/learn_exercises.php?LN=84
 
 ## 85
 https://sql-ex.ru/learn_exercises.php?LN=85
+```
+select maker from ( select maker from product where type='printer'  except  
+select maker from product where type='laptop' except select maker from product where type='pc' ) as T 
+union 
+select maker from ( select maker from product inner join pc on pc.model=product.model group by maker 
+having count(maker)>=3 except select maker from product where type='laptop' except  
+select maker from product where type='printer' ) as S 
+```
 
 
 ## 86
@@ -667,6 +685,12 @@ https://sql-ex.ru/learn_exercises.php?LN=88
 
 ## 89
 https://sql-ex.ru/learn_exercises.php?LN=89
+```
+select maker, count(maker) from product group by maker  having count(maker) in (  
+select max(D.cnt) from  ( select maker, count(maker) as cnt from product group by maker ) as D 
+union 
+select min(F.cnt) from ( select maker, count(maker) as cnt from product group by maker ) as F ) 
+```
 
 
 ## 90
@@ -675,6 +699,9 @@ https://sql-ex.ru/learn_exercises.php?LN=90
 
 ## 91
 https://sql-ex.ru/learn_exercises.php?LN=91
+```
+select count(*)  from ( select maker from product group by maker having count(model)=1 ) as Q
+```
 
 
 ## 92
