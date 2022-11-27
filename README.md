@@ -221,6 +221,12 @@ where maker in(select maker  from product  where type='printer')  group by maker
     
 ## 28
 https://sql-ex.ru/learn_exercises.php?LN=28
+```
+
+    select count(maker) as qty from (SELECT distinct maker
+FROM product group by maker having count(model) = 1) AS prod;
+  
+```
 
     
 ## 29
